@@ -755,24 +755,24 @@ void Widget::FirstSpinSetRange(QSpinBox* spin, bool hueSpace)
 void Widget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
-    QPixmap Grad(GradientLabel->width(), GradientLabel->height());
+
+    int size = 200;
+
+    QPixmap Grad(size, size);
     QPainter paint(&Grad);
-    double radius =200;
-    QLinearGradient linearGradient(0,0, radius,0);
+
+    QLinearGradient linearGradient(0,0, size, 0);
     linearGradient.setColorAt(0.0, Qt::red);
     linearGradient.setColorAt(0.35, Qt::yellow);
     linearGradient.setColorAt(0.5, Qt::green);
     linearGradient.setColorAt(0.65, Qt::cyan);
     linearGradient.setColorAt(0.8, Qt::blue);
     linearGradient.setColorAt(1.0, Qt::magenta);
-    GradientLabel->setPixmap(Grad);
-    GradientLabel->setMinimumSize(200,200);
-    GradientLabel->setMaximumSize(200,200);
-    paint.setBrush(linearGradient);
-    paint.drawRect(0,0,GradientLabel->width()-1,GradientLabel->height()-1);
-    GradientLabel->update();
-}
 
+    paint.setBrush(linearGradient);
+    paint.drawRect(0, 0, size, size);
+    GradientLabel->setPixmap(Grad);
+}
 void Widget::setSpacesAndLabel()
 {
     QVector<int> valuesLeft=getValues(spaces[0]);
