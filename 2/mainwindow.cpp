@@ -12,7 +12,6 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-
     tableWidget = new QTableWidget(this);
     tableWidget->setColumnCount(5);
     tableWidget->setHorizontalHeaderLabels({"File Name", "Size (px)", "Resolution (dpi)", "Color Depth", "Compression"});
@@ -24,13 +23,23 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *openButton = new QPushButton("Open Folder", this);
     connect(openButton, &QPushButton::clicked, this, &MainWindow::openFolder);
 
+    QPushButton *clearButton = new QPushButton("Clear Table", this); // Create the clear button
+    connect(clearButton, &QPushButton::clicked, this, &MainWindow::clearTable); // Connect it to the slot
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(openButton);
+    layout->addWidget(clearButton); // Add the clear button to the layout
     layout->addWidget(tableWidget);
 
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
+}
+
+void MainWindow::clearTable()
+{
+    tableWidget->clearContents(); // Clear the cell contents
+    tableWidget->setRowCount(0); // Reset the row count
 }
 
 void MainWindow::openFolder()
@@ -67,4 +76,5 @@ void MainWindow::processImages(const QString &folderPath)
         tableWidget->setItem(i, 3, colorDepthItem);
         tableWidget->setItem(i, 4, compressionItem);
     }
+
 }

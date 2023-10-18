@@ -15,7 +15,7 @@ public:
 private slots:
     void openFolder();
     void processImages(const QString &folderPath);
-
+    void clearTable();
 private:
     QTableWidget *tableWidget;
 };
