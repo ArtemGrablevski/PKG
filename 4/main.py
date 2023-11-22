@@ -8,24 +8,12 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class Point:
 
-    def __init__(self, x, y, r=5):
+    __slots__ = ("x", "y", "r")
+
+    def __init__(self, x: int | float, y: int | float, r: int | float = 5):
         self.x = x
         self.y = y
         self.r = r
-
-def step_algorithm(p1, p2):
-    x1, y1 = p1.x, p1.y
-    x2, y2 = p2.x, p2.y
-    if x1 > x2:
-        x1, x2 = x2, x1
-        y1, y2 = y2, y1
-    dx = x2 - x1
-    dy = y2 - y1
-    xa, ya = [], []
-    for i in range(x1, x2 + 1):
-        xa.append(i)
-        ya.append(y1 + dy * (i - x1) / dx)
-    return xa, ya
 
 
 def DDA_algorithm(p1, p2):
@@ -91,25 +79,18 @@ def wu_line_algorithm(p1, p2):
     return xa, ya
 
 
-def bresenham_line(p1, p2):
+def step_algorithm(p1, p2):
     x1, y1 = p1.x, p1.y
     x2, y2 = p2.x, p2.y
-    dx = abs(x2 - x1)
-    dy = abs(y2 - y1)
-    sign_x = 1 if x1 < x2 else -1
-    sign_y = 1 if y1 < y2 else -1
-    err = dx - dy
+    if x1 > x2:
+        x1, x2 = x2, x1
+        y1, y2 = y2, y1
+    dx = x2 - x1
+    dy = y2 - y1
     xa, ya = [], []
-    while x1 != x2 or y1 != y2:
-        xa.append(abs(x1))
-        ya.append(abs(y1))
-        err2 = err * 2
-        if (err2 > -dy):
-            err -= dy
-            x1 += sign_x
-        if (err2 < dx):
-            err += dx
-            y1 += sign_y
+    for i in range(x1, x2 + 1):
+        xa.append(i)
+        ya.append(y1 + dy * (i - x1) / dx)
     return xa, ya
 
 
@@ -132,6 +113,28 @@ def bresenham_circle(p1, r):
         else:
             x -= 1
             rerr += 2 * (y - x + 1)
+    return xa, ya
+
+
+def bresenham_line(p1, p2):
+    x1, y1 = p1.x, p1.y
+    x2, y2 = p2.x, p2.y
+    dx = abs(x2 - x1)
+    dy = abs(y2 - y1)
+    sign_x = 1 if x1 < x2 else -1
+    sign_y = 1 if y1 < y2 else -1
+    err = dx - dy
+    xa, ya = [], []
+    while x1 != x2 or y1 != y2:
+        xa.append(abs(x1))
+        ya.append(abs(y1))
+        err2 = err * 2
+        if (err2 > -dy):
+            err -= dy
+            x1 += sign_x
+        if (err2 < dx):
+            err += dx
+            y1 += sign_y
     return xa, ya
 
 
@@ -211,7 +214,7 @@ if __name__ == "__main__":
     p2 = Point(210, 160)
     root = Tk()
     w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-    root.geometry(f"800x700+{w//2 - 200}+{h// - 200}")
+    root.geometry(f"800x700+{w // 2 - 200}+{h // - 200}")
     fig = plt.figure(figsize=(5, 5))
     frame1 = Frame(root)
     frame1.place(x=0, y=0, width=700, height=700)
@@ -238,12 +241,12 @@ if __name__ == "__main__":
     ax3 = fig.add_subplot(223)
     ax3.grid()
     ax3.minorticks_on()
-    ax3.grid(which="major",
-             color="k",
-             linewidth=0.1)
-    ax3.grid(which="minor",
-             color="k",
-             linewidth=0.1)
+    ax3.grid(
+        which="major", color="k", linewidth=0.1
+    )
+    ax3.grid(
+        which="minor", color="k", linewidth=0.1
+    )
     ax4 = fig.add_subplot(224)
     ax4.grid()
     ax4.minorticks_on()
