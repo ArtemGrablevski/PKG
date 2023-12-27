@@ -58,11 +58,24 @@ rotation_speed = 15.0
 def draw_letter():
     glLineWidth(4)
     glBegin(GL_LINES)
+    glColor3fv((1, 0, 0))  # Red X-axis
+    glVertex3fv((0, 0, 0))
+    glVertex3fv((1, 0, 0))
+
+    glColor3fv((0, 1, 0))  # Green Y-axis
+    glVertex3fv((0, 0, 0))
+    glVertex3fv((0, 1, 0))
+
+    glColor3fv((0, 0, 1))  # Blue Z-axis
+    glVertex3fv((0, 0, 0))
+    glVertex3fv((0, 0, 1))
+
     for edge in edges:
         for vertex in edge:
-            glColor3fv((0, 0, 1))
+            glColor3fv((0, 0, 1))  # Blue lines for the object
             glVertex3fv(vertices[vertex])
     glEnd()
+
 
 
 def main():
