@@ -72,7 +72,7 @@ def draw_letter():
 
     for edge in edges:
         for vertex in edge:
-            glColor3fv((0, 0, 1))  # Blue lines for the object
+            glColor3fv((0, 0, 1))
             glVertex3fv(vertices[vertex])
     glEnd()
 
